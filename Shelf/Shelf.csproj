@@ -215,7 +215,9 @@
     <Content Include="Content\intro02.png" />
     <Content Include="Content\intro03.png" />
     <Content Include="Content\Layout.css" />
+    <Content Include="Content\material.css" />
     <Content Include="Content\Preloader_2.gif" />
+    <Content Include="Content\ripples.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -257,9 +259,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\material.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ripples.js" />
     <Content Include="Scripts\smoothscroll.js" />
     <Content Include="Scripts\typeahead.js" />
     <Content Include="Scripts\_references.js" />

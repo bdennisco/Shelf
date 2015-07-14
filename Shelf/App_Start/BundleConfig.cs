@@ -28,10 +28,14 @@ namespace Shelf
             bundles.Add(new ScriptBundle("~/bundles/plugins").Include(
                       "~/Scripts/handlebars-v1.3.0.js",
                       "~/Scripts/jquery.ui.touch-punch.js",
-                      "~/Scripts/jquery.shapeshift.js"));
+                      "~/Scripts/jquery.shapeshift.js",
+                      "~/Scripts/material.js",
+                      "~/Scripts/ripples.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/material.css",
+                      "~/Content/ripples.css",
                       "~/Content/content.css",
                       "~/Content/layout.css",
                       "~/Content/site.css"));
