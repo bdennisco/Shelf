@@ -1,3 +1,5 @@
 *.pdb
 *.cache
 *.dll
+/Shelf/bin/*
+/Shelf/obj/*
