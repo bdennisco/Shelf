@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNet.Identity
+@if (User.Identity.IsAuthenticated && Session["me"] != null)
+{
+        Shelf.Models.FacebookUser me = (Shelf.Models.FacebookUser)Session["me"];
+    
+        <!--Mobile Account Menu-->
+        <ul class="nav navbar-nav navbar-right visible-xs">
+            <li>@Html.ActionLink("My Shelf", "Index", "Home")</li>
+            <li class="divider"></li>
+            <li><a href="@(Url.Action("LogOff", "Account"))">Log Out</a></li>
+        </ul>
+
+        <!--Normal Account Menu-->
+        <ul class="nav navbar-nav navbar-right hidden-xs">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding:5px;">
+                  <img src="@me.ImageUrl" alt="@me.Name" id="user-pic" class="img-rounded">
+              </a>
+              <ul class="dropdown-menu">
+                <li>@Html.ActionLink("My Shelf", "Index", "Home")</li>
+                <li class="divider"></li>
+                <li><a href="@(Url.Action("LogOff", "Account"))">Log Out</a></li>
+              </ul>
+            </li>
+        </ul>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="/Account/ExternalLogin?ReturnUrl=%2F">Sign Up</a></li>
+        <li><a href="/Account/ExternalLogin?ReturnUrl=%2F">Log In</a></li>
+    </ul>
+}

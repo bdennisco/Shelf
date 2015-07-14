@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="shelfAsdQ47fllwPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Code_Types">
+    <Key>
+      <PropertyRef Name="TypeID" />
+    </Key>
+    <Property Name="TypeID" Type="Int32" Nullable="false" />
+    <Property Name="TypeName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Ownership">
+    <Key>
+      <PropertyRef Name="OwnershipID" />
+    </Key>
+    <Property Name="OwnershipID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MediaID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TypeID" Type="Int32" />
+    <Property Name="Season" Type="Int32" />
+    <Property Name="Order" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="shelfDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Code_Types" EntityType="Self.Code_Types" />
+    <EntitySet Name="Ownerships" EntityType="Self.Ownership" />
+  </EntityContainer>
+</Schema>

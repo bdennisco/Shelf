@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="shelfAsdQ47fllwPModelStoreContainer" CdmEntityContainer="shelfDBEntities">
+    <EntitySetMapping Name="Code_Types">
+      <EntityTypeMapping TypeName="shelfAsdQ47fllwPModel.Code_Types">
+        <MappingFragment StoreEntitySet="Code_Types">
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ownerships">
+      <EntityTypeMapping TypeName="shelfAsdQ47fllwPModel.Ownership">
+        <MappingFragment StoreEntitySet="Ownership">
+          <ScalarProperty Name="OwnershipID" ColumnName="OwnershipID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="MediaID" ColumnName="MediaID" />
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="Season" ColumnName="Season" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

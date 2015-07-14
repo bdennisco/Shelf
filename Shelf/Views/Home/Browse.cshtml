@@ -1,0 +1,18 @@
+﻿@model Shelf.Models.FacebookUser
+
+@foreach (var friend in Model.Friends)
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-xs-3">
+                    @friend.Name
+                    <br/> @friend.Id
+                </div>
+                <div class="col-xs-9">
+                    @{ Html.RenderPartial("_RenderShelf", friend.Id) ;}
+                </div>
+            </div>
+        </div>
+    </div>
+}

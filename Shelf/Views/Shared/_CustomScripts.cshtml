@@ -1,0 +1,262 @@
+﻿<script>
+
+    $(function () {
+        $("#nav-search").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "@(Url.Action("Search","Home"))",//"https://api.themoviedb.org/3/search/multi?api_key=c3c880a81a589570f8a0a15fad890351&include_adult=false",
+                    dataType: "jsonp",
+                    data: {
+                        query: request.term
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        response(data.results);
+                        /*
+                        response($.grep(data.results, function(item) {
+                            return item.media_type !== 'person'; // & item.poster_path != null & item.popularity > 1;
+                        }));
+                        */
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error(errorThrown);
+                    }
+                });
+            },
+            minLength: 2,
+            delay: 500,
+            autoFocus: true,
+            select: function (event, ui) {
+                console.log(ui.item ?
+		          "Selected: " + ui.item.title :
+		          "Nothing selected, input was " + this.value);
+            },
+            open: function () {
+                //$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+                $("#sortable").removeClass("active");
+                $("#sortable").addClass("inactive");
+                $("#searchResults").addClass("active");
+                $(function () {
+                    var shapeshiftObj = $("#searchResults");
+
+                    shapeshiftObj.shapeshift({
+                        selector: ".mediaItem",
+                        enableDrag: false,
+                        align: "left",
+                        gutterX: 20,
+                        gutterY: 20,
+                        animateOnInit: false,
+                        animationSpeed: 225,
+                        dragRate: 100
+                    });
+                    $(".mediaItem").disableSelection();
+                    //shapeshiftObj.draggable( "disable" );
+                });
+                resetKeyControl();
+            },
+            close: function () {
+                //$( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+                $("#sortable").removeClass("inactive");
+                $("#sortable").addClass("active");
+                $("#searchResults").toggleClass("active");
+            },
+            search: function () {
+                $("#searchResults").empty();
+            }
+        });
+
+        $("#nav-search").data("uiAutocomplete")._renderMenu = function (ul, items) {
+            var that = this;
+            ul = $("#searchResults");
+            $.each(items, function (index, item) {
+                that._renderItemData(ul, item);
+            });
+        };
+
+        $("#nav-search").data("uiAutocomplete")._suggest = function (items) {
+            var ul = this.menu.element.empty();
+            this._renderMenu(ul, items);
+            this.isNewMenu = true;
+            this.menu.refresh();
+
+            // size and position menu
+            //ul.show();
+            this._resizeMenu();
+            ul.position($.extend({
+                of: this.element
+            }, this.options.position));
+
+            if (this.options.autoFocus) {
+                this.menu.next();
+            };
+        };
+
+        @{
+            var Me = (Shelf.Models.FacebookUser)Session["me"];
+        }
+        // custom items
+        $("#nav-search").data("uiAutocomplete")._renderItem = function (ul, item) {
+            var element = "<li class='mediaItem fadein' id='" + item.id + "'><img src=http://image.tmdb.org/t/p/w185" + item.poster_path + " alt='name' class='mediaThumb' /><div class='mediaOverlay'><ul class='actions'>";
+            if (item.owners != null) {
+                var c = 0;
+                item.owners.map(function (owner) {
+                    if (owner.id == "@(Me.Id)") {
+                        element = element + "<li><a data-ajax='true' data-ajax-method='Post' href='/Home/AddFromSearch?MediaId=" + item.id + "&MediaType=" + item.media_type + "' title='Add'><span class='fa-stack fa-lg'><i class='fa fa-circle-o fa-stack-2x'></i><i class='fa fa-minus fa-stack-1x'></i></span></a></li>";
+                    } else {
+                        c++;
+                        if (c <= 3) {
+                            element = element + "<li><a data-ajax='true' data-ajax-method='Post' href='/Home/AddFromSearch?MediaId=" + item.id + "&MediaType=" + item.media_type + "' title='Add'><span class='fa-stack fa-lg'><i class='fa fa-circle-o fa-stack-2x'></i><i class='fa fa-plus fa-stack-1x'></i></span></a></li>"
+                                              + "<li><a href='/Home/' title='Add'><img src='" + owner.image + "' width='35px' class='img-rounded' /></a></li>";
+                        }
+                    }
+                });
+            } else {
+                element = element + "<li><a data-ajax='true' data-ajax-method='Post' href='/Home/AddFromSearch?MediaId=" + item.id + "&MediaType=" + item.media_type + "' title='Add'><span class='fa-stack fa-lg'><i class='fa fa-circle-o fa-stack-2x'></i><i class='fa fa-plus fa-stack-1x'></i></span></a></li>";
+            };
+            element = element + "</ul></div></li>";
+            return $(element).appendTo(ul);
+        };
+    });
+
+    // shapeshift
+    $(function () {
+        var shapeshiftObj = $("#sortable");
+
+        shapeshiftObj.shapeshift({
+            selector: ".mediaItem",
+            enableDrag: true,
+            align: "left",
+            gutterX: 20,
+            gutterY: 20,
+            animateOnInit: true,
+            animationSpeed: 225,
+            dragRate: 100,
+            update: function (e, ui) {
+                var data = $(this).sortable('serialize');
+                console.log(data);
+            }
+        });
+        $(".mediaItem").disableSelection();
+        //shapeshiftObj.draggable( "disable" );
+    });
+
+
+    // search ux
+    var searchBox = $("#nav-search");
+
+    // on focus
+    searchBox.focus(function () {
+        if (searchBox[0].value.length > 0) {
+            // do nothing
+        } else {
+            $("#sortable").addClass("translucent");
+            $("#clear-search").addClass("active");
+        }
+    });
+
+    // on keypress
+    $(searchBox).keyup(function () {
+        if (searchBox[0].value.length > 1) {
+            $("#sortable").removeClass("active");
+            $("#sortable").addClass("inactive");
+            $("#searchResults").addClass("active");
+            $(".navbar-form .ui-helper-hidden-accessible").show();
+        } else {
+            $("#sortable").addClass("active");
+            $("#sortable").removeClass("inactive");
+            $("#searchResults").removeClass("active");
+        }
+    });
+
+    // on blur
+    $(searchBox).blur(function () {
+        if (searchBox[0].value.length > 0) {
+            // do nothing
+        } else {
+            hideSearch();
+            resetKeyControl();
+        }
+    });
+
+    $("#clear-search").click(function () {
+        hideSearch();
+        resetKeyControl();
+    });
+
+    // keyboard control
+
+    var activeMediaItem = 0;
+    var numberOfItemsWide = Math.round($("#sortable").width() / 300 + 1);
+    var totalMediaItems = $("#content .active .mediaItem").length;
+
+
+    $(document).keydown(function (e) {
+        switch (e.which) {
+            case 13: clickFirstAction();
+                changeActiveMediaItem(1);
+                break;
+
+            case 27: hideSearch();
+                $("#nav-search").val("");
+                break;
+
+            case 37: changeActiveMediaItem(-1);
+                break;
+
+            case 38: changeActiveMediaItem(-numberOfItemsWide);
+                break;
+
+            case 39: changeActiveMediaItem(1);
+                break;
+
+            case 40: changeActiveMediaItem(numberOfItemsWide);
+                break;
+
+            default: return; // exit this handler for other keys
+        }
+        e.preventDefault(); // prevent the default action (scroll / move caret)
+    });
+
+    function clickFirstAction() {
+        $("#content .active .mediaItem.active .actions li:first-child a").click();
+    }
+    function hideSearch() {
+        $("#sortable").removeClass("inactive");
+        $("#sortable").removeClass("translucent");
+        $("#sortable").addClass("active");
+        $("#searchResults").addClass("inactive");
+        $("#searchResults").removeClass("active");
+        $("#clear-search").removeClass("active");
+        $(".navbar-form .ui-helper-hidden-accessible").hide();
+    }
+    function setActions(elements) {
+        $.each(elements, function(index, value) {
+            var actions = $(value).find(".mediaOverlay .actions");
+            actions.append('<li><a data-ajax="true" data-ajax-method="Post" data-ajax-mode="after" data-ajax-update="#sortable .mediaItem:last-child" href="/Home/AddFromSearch?MediaId=' + value.id + '&amp;MediaType=movie" title="Add"><span class="fa-stack fa-lg"><i class="fa fa-circle-o fa-stack-2x"></i><i class="fa fa-plus fa-stack-1x"></i></span></a></li>');
+
+        });
+        
+    }
+    function changeActiveMediaItem(change) {
+        if (activeMediaItem + change > 0 && activeMediaItem + change <= totalMediaItems) {
+            activeMediaItem = activeMediaItem + change;
+            $("#content .active .mediaItem.active").removeClass("active");
+            $("#content .active .mediaItem:nth-child("+activeMediaItem+")").addClass("active");
+        } else if (activeMediaItem + change > 0 && activeMediaItem + change > totalMediaItems) {
+            activeMediaItem = totalMediaItems;
+            $("#content .active .mediaItem.active").removeClass("active");
+            $("#content .active .mediaItem:nth-child(" + activeMediaItem + ")").addClass("active");
+        }
+    }
+    function resetKeyControl() {
+        activeMediaItem = 0;
+        $("#content .active .mediaItem.active").removeClass("active");
+        totalMediaItems = $("#content .active .mediaItem").length;
+    }
+    function dropAndPop(id) {
+        $('.mediaItem[data-id=' + id + ']').hide('drop', function () {
+            $(this).remove();
+            $('#sortable').trigger('ss-rearrange');
+        });
+    }
+</script>

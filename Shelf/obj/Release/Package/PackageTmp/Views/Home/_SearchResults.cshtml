@@ -1,0 +1,15 @@
+﻿@model List<Shelf.Models.Media>
+{ "page": 1,
+  "results":[
+@foreach (var media in Model)
+{
+    media.Actions.Add = true;
+    Html.RenderPartial("~/Views/Shared/_RenderResult.cshtml", media);
+    if (media != Model.LastOrDefault())
+    {
+        @:,
+    }
+}
+], "total_pages": 1,
+    "total_results": 1
+}

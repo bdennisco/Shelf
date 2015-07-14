@@ -1,0 +1,64 @@
+﻿@model Shelf.Models.Media
+@{
+    string ImageUrl = new MediaAPI().GetPoster(Model.poster_path);
+}
+
+<div id ="@Model.id" class="mediaItem sortable" data-id="@Model.id" data-src="@ImageUrl" data-width="200" data-height="300">
+
+    <img src="@ImageUrl" alt="@Model.name" class="mediaThumb" />
+    <div class="mediaOverlay">
+        <ul class="actions">
+            @if (Model.Actions.Add)
+            {
+                <li>
+                    <a class="" data-ajax="true" data-ajax-method="Post" data-ajax-mode="after" data-ajax-update="#sortable .mediaItem:last-child" href="/Home/Add?MediaID=@(Model.id)" title="Add">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle-o fa-stack-2x"></i>
+                            <i class="fa fa-plus fa-stack-1x"></i>
+                        </span>
+                    </a>
+                </li>
+            }
+            @if (Model.Actions.Remove)
+            {
+                <li>
+                    <a class="" data-ajax="true" data-ajax-method="Post" href="/Home/Remove?MediaID=@(Model.id)" onclick="dropAndPop(@(Model.id))" title="Remove">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle-o fa-stack-2x"></i>
+                            <i class="fa fa-minus fa-stack-1x"></i>
+                        </span>
+                    </a>
+                </li>
+            }
+            @if (false)
+            {
+                <li>
+                    <a class="" data-ajax="true" data-ajax-method="Get" data-ajax-mode="replace" data-ajax-update="#SearchContent" href="/Home/MovieInfo?MediaID=@(Model.id)&amp;Type=@(Model.type)" title="Info">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle-o fa-stack-2x"></i>
+                            <i class="fa fa-info fa-stack-1x"></i>
+                        </span>
+                    </a>
+                </li>
+            }
+            @if (false)
+            {
+                <li>
+                    <a class="handle" title="Move">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle-o fa-stack-2x"></i>
+                            <i class="fa fa-arrows fa-stack-1x"></i>
+                        </span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+
+
+@if (Model.type == 2)
+{
+    // You're a tv show Harry!
+}

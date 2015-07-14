@@ -1,0 +1,22 @@
+﻿@model string
+
+<div class="sortable-container">
+    <div id="sortable" class="sortable-body active">
+        @{
+            IOrderedEnumerable<Shelf.Models.Media> SortedShelf;
+            try {
+            SortedShelf = new MediaAPI().GetUserShelf(Model).OrderBy(s=>s.order);
+            }
+            catch (Exception e)
+            {
+                SortedShelf = new MediaAPI().GetUserShelf(Model).OrderBy(s => s.order);
+            }
+        }
+        @foreach (var item in SortedShelf)
+        {
+            item.Actions.Remove = true;
+            item.Actions.Info = true;
+            Html.RenderPartial("_RenderMedia", item);
+        }
+    </div>
+</div>

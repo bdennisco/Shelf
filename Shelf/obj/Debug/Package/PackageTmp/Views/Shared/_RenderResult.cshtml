@@ -1,0 +1,12 @@
+﻿@model string
+
+<img src="http://image.tmdb.org/t/p/w185@(Model)" alt='name' class='mediaThumb'/>
+<div class='mediaOverlay'>
+    <ul class='actions'>
+        <li>
+            <a data-ajax='true' data-ajax-method='Post' href='/Home/AddFromSearch?MediaId=" + item.id + "&MediaType=" + item.media_type + "' title='Add'>
+                <span class='fa-stack fa-lg'><i class='fa fa-circle-o fa-stack-2x'></i><i class='fa fa-plus fa-stack-1x'></i></span>
+            </a>
+        </li>
+    </ul>
+</div>

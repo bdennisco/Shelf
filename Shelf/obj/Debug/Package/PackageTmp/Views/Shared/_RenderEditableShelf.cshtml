@@ -1,0 +1,26 @@
+﻿@model string
+
+<div class="sortable-container">
+    <div id="sortable-body" class="sortable-body">
+        @foreach (var item in new MediaAPI().GetUserShelf(Model))
+        {
+            item.Actions.Remove = true;
+            item.Actions.Info = true;
+            Html.RenderPartial("_RenderMedia", item);
+        }
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#sortable-body").sortable({
+            placeholder: "mediaItem ui-placeholder",
+            connectWith: "#new-collection",
+            stop: function (event, ui) {
+                console.log(ui.item.attr('id') + " moved to position " + ui.item.index());
+            }
+        });
+
+        $("#sortable-body").disableSelection();
+    });
+</script>

@@ -1,0 +1,7 @@
+﻿@model List<Shelf.Models.Media>
+
+@foreach (var media in Model)
+{
+    media.Actions.Add = true;
+    Html.RenderPartial("~/Views/Shared/_RenderResult.cshtml", media);
+}

@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shelf - @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="navbar navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="row">
+                <div class="logo col-xs-2">
+                    <h1><i class="fa fa-bars"></i></h1>
+                </div>
+
+                <div class="col-xs-8">
+                    <form class="navbar-form">
+                        <input type="text" id="nav-search" class="form-control typeahead" placeholder="Search...">
+                        <button type="reset" id="clear-search">X</button>
+                    </form>
+                </div>
+
+                <div class="col-xs-2">
+                    @{ Html.RenderPartial("_LoginPartial"); }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div id="content" class="main">
+        @RenderBody()
+        </div>
+      </div>
+    </div>
+
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <p class="footer-text">&copy; @DateTime.Now.Year - Shelf</p>
+                </div>
+                <div class="col-md-9">
+                    <div id="moneyMaker">
+                        <img src="http://lorempixel.com/g/600/80/cats" alt="Ad" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Alerts *@
+    <div class="alert alert-danger invisible">
+        <strong>Don't look!</strong> You shouldn't be seeing this text.
+    </div>
+
+    @* Modals *@
+    @{ Html.RenderPartial("_SearchModal"); }
+
+    
+    @Scripts.Render("~/bundles/plugins")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+    @{ Html.RenderPartial("_CustomScripts"); }
+
+</body>
+</html>

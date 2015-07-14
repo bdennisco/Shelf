@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="shelf" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Bob\\Dropbox\\Visual\ Studio\ Projects\\Shelf\\Shelf\.0\.3\.2\\Shelf\\Shelf\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Bob\\Dropbox\\Visual\ Studio\ Projects\\Shelf\\Shelf\.0\.3\.2\\Shelf\\Shelf\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=tcp:phlurgnzbb.database.windows.net,1433;Initial Catalog=shelfAsdQ47fllwP;User Id=shelfDB_Admin@phlurgnzbb;Password=Foreca$t21" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Bob\\Dropbox\\Visual\ Studio\ Projects\\Shelf\\Shelf\.0\.3\.2\\Shelf\\Shelf\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="shelfDBEntities-Web.config Connection String" description="" value="metadata=res://*/Models.ShelfDBModel.csdl|res://*/Models.ShelfDBModel.ssdl|res://*/Models.ShelfDBModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=tcp:phlurgnzbb.database.windows.net,1433;Initial Catalog=shelfAsdQ47fllwP;User Id=shelfDB_Admin@phlurgnzbb;Password=Foreca$t21&quot;" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Bob\\Dropbox\\Visual\ Studio\ Projects\\Shelf\\Shelf\.0\.3\.2\\Shelf\\Shelf\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='shelfDBEntities']/@connectionString" />
+  </parameter>
+</parameters>

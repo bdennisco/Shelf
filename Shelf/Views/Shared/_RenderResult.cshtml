@@ -1,0 +1,59 @@
+﻿@model Shelf.Models.Media
+@{
+    string imageURL = new MediaAPI().GetPoster(Model.poster_path);
+    TempData[Model.id] = Model;
+}
+{
+    "id": "@(Model.id)",
+    "original_name": "@(Model.name)",
+    "poster_path": "@(imageURL)",
+    "name": "@(Model.name)",
+    "media_type": "@(Model.type)"
+    @if (Model.Owners != null && Model.Owners.Count > 0)
+    {
+        @:,"owners": [
+            foreach (var owner in Model.Owners)
+            {
+                @:{"id": "@(owner.Id)",
+                @:"name": "@(owner.Name)",
+                @:"image": "@(owner.ImageUrl)"}
+                if (owner != Model.Owners.LastOrDefault())
+                {
+                    @:,
+                }
+            }
+        @:]
+    }
+}
+@*
+<div class="media">
+    <img class="media-object pull-left" src="@imageURL" alt="@Model.name">
+    <div class="media-body">
+        <h4 class="media-heading">@Model.name</h4>
+        <h6>@Model.release_date.Year</h6>
+        <div class="owners">
+            @foreach (var owner in Model.Owners)
+            {
+                string HoverText = owner.Name;
+                if (Model.type == 2) {
+                    HoverText = owner.Name + " owns season " + Model.Season;
+                }else {
+                    HoverText = owner.Name + " owns this movie";
+                }
+                <text>
+                <a href="/Home/Friend?FriendID=@(owner.Id)" data-toggle="tooltip" data-placement="right" title="@(HoverText)">
+                    <img src="http://graph.facebook.com/@(owner.Id)/picture" alt="@owner.Name" class="img-rounded" width="50px" />
+                    <div class="tooltip"></div>
+                </a>
+                </text>
+            }
+        </div>
+        <div class="actionsWrapper">
+            <ul class="actions">
+                <li>@Ajax.ActionLink("Add", "Add", new { MediaID = Model.id }, new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "body-content" }, new { @class = "btn btn-default" })</li>
+                <li>@Html.ActionLink("More Info", "MovieInfo", new { MovieID = Model.id }, new { title = "Info", @class = "btn btn-default" })</li>
+            </ul>
+        </div>
+    </div>
+</div>
+*@
