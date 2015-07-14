@@ -1,7 +1,25 @@
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# User-specific files (MonoDevelop/Xamarin Studio)
+*.userprefs
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio 2015 cache/options directory
+.vs/
 *.pdb
-*.cache
 *.dll
-Shelf/[Oo]bj/
-Shelf/[Bb]in
-Shelf/[Dd]ebug*/
-Shelf/[Rr]elease*/
