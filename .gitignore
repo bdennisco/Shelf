@@ -1,7 +1,7 @@
 *.pdb
 *.cache
 *.dll
-*/[Oo]bj/
-*/[Bb]in
-*/[Dd]ebug*/
-*/[Rr]elease*/
+Shelf/[Oo]bj/
+Shelf/[Bb]in
+Shelf/[Dd]ebug*/
+Shelf/[Rr]elease*/
