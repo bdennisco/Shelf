@@ -1,5 +1,7 @@
 *.pdb
 *.cache
 *.dll
-/Shelf/bin/*
-/Shelf/obj/*
+[Oo]bj/
+[Bb]in
+[Dd]ebug*/
+[Rr]elease*/
